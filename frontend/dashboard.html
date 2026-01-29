@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CodeArena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e1e5e9;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #e9ecef;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .quick-action-btn {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .quick-action-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quick-action-btn.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .quick-action-btn.primary:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">CodeArena</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="problems.html">Problems</a></li>
+                    <li><a href="submissions.html">Submissions</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem 20px;">
+        <!-- Dynamic Welcome Section -->
+        <div style="text-align: center; margin-bottom: 3rem; color: white;">
+            <h1 id="welcomeMessage" style="font-size: 3rem; margin-bottom: 0.5rem;">
+                Welcome back, <span id="userFullName">Loading...</span>!
+            </h1>
+            <p id="welcomeSubtext" style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 1.5rem;">
+                Track your progress and continue your coding journey
+            </p>
+            
+            <!-- Refresh Stats Button -->
+            <button id="refreshStats" class="refresh-btn">
+                🔄 Refresh Stats
+            </button>
+        </div>
+
+        <!-- Stats Cards Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <!-- Problems Solved Card -->
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <span style="color: white;">📝</span>
+                </div>
+                <div id="problemsSolved" class="stat-number">0</div>
+                <div class="stat-label">Problems Solved</div>
+            </div>
+
+            <!-- Accuracy Rate Card -->
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                    <span style="color: white;">🎯</span>
+                </div>
+                <div id="accuracyRate" class="stat-number">0%</div>
+                <div class="stat-label">Accuracy Rate</div>
+            </div>
+
+            <!-- Current Streak Card -->
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                    <span style="color: white;">🏆</span>
+                </div>
+                <div id="currentStreak" class="stat-number">0</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+
+            <!-- Total Submissions Card -->
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
+                    <span style="color: white;">📊</span>
+                </div>
+                <div id="totalSubmissions" class="stat-number">0</div>
+                <div class="stat-label">Total Submissions</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+            <!-- Recent Activity -->
+            <div class="activity-card">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 style="color: #667eea; margin: 0;">Recent Activity</h3>
+                    <span style="color: #888; font-size: 0.9rem;">Last 7 days</span>
+                </div>
+                
+                <div id="recentActivity">
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #28a745; color: white;">
+                            ✓
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #333;">Two Sum</h4>
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">Solved • Easy • 2 minutes ago</p>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #dc3545; color: white;">
+                            ✗
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #333;">Binary Search</h4>
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">Failed • Medium • 1 hour ago</p>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #28a745; color: white;">
+                            ✓
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #333;">Valid Parentheses</h4>
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">Solved • Easy • 3 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View All Activity Button -->
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button onclick="window.location.href='submissions.html'" 
+                            style="background: none; border: none; color: #667eea; font-weight: 600; cursor: pointer; padding: 0.5rem 1rem; border-radius: 6px; transition: background 0.3s ease;">
+                        View All Activity →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="activity-card">
+                <h3 style="color: #667eea; margin-bottom: 1.5rem;">Quick Actions</h3>
+                
+                <button onclick="window.location.href='problems.html'" class="quick-action-btn primary">
+                    🧩 Browse Problems
+                </button>
+                
+                <button onclick="window.location.href='problems.html'" class="quick-action-btn">
+                    🎯 Practice Easy
+                </button>
+                
+                <button onclick="window.location.href='submissions.html'" class="quick-action-btn">
+                    📋 View Submissions
+                </button>
+                
+                <button onclick="Dashboard.createTestSubmissions()" class="quick-action-btn" id="createTestData">
+                    🧪 Create Test Data
+                </button>
+
+                <!-- Progress Overview -->
+                <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                    <h4 style="margin: 0 0 1rem 0; color: #333;">Progress Overview</h4>
+                    
+                    <div style="margin-bottom: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                            <span style="font-size: 0.9rem; color: #666;">Problems Solved</span>
+                            <span id="progressProblems" style="font-size: 0.9rem; font-weight: 600;">0/100</span>
+                        </div>
+                        <div style="background: #e9ecef; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div id="progressBar" style="background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #888;">
+                            <span>🟢 Easy: <span id="easyCount">0</span></span>
+                            <span>🟡 Medium: <span id="mediumCount">0</span></span>
+                            <span>🔴 Hard: <span id="hardCount">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievement Section -->
+        <div style="margin-top: 3rem;">
+            <div class="activity-card">
+                <h3 style="color: #667eea; margin-bottom: 1.5rem;">🏆 Recent Achievements</h3>
+                <div id="achievements" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎉</div>
+                        <div style="font-weight: 600; color: #333;">First Problem Solved!</div>
+                        <div style="font-size: 0.9rem; color: #666;">Keep up the great work!</div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px; opacity: 0.5;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔥</div>
+                        <div style="font-weight: 600; color: #333;">5 Day Streak</div>
+                        <div style="font-size: 0.9rem; color: #666;">Solve 5 problems in a row</div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px; opacity: 0.5;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                        <div style="font-weight: 600; color: #333;">Speed Solver</div>
+                        <div style="font-size: 0.9rem; color: #666;">Solve 3 problems in 1 hour</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

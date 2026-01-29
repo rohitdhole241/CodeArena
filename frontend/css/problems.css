@@ -1,0 +1,630 @@
+.problems-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 150px;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: #555;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.problems-container {
+    display: grid;
+    gap: 1rem;
+}
+
+.problem-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e5e9;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.problem-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+}
+
+.problem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+.problem-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.difficulty-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.difficulty-easy {
+    background: #d4edda;
+    color: #155724;
+}
+
+.difficulty-medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.difficulty-hard {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.problem-meta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.problem-description {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.problem-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e1e5e9;
+}
+
+.problem-solved {
+    color: #28a745;
+    font-weight: 500;
+}
+
+/* Problem Detail Page Styles */
+.problem-panel {
+    height: fit-content;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.editor-panel {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    overflow-y: auto; /* Make the editor panel scrollable */
+}
+
+.code-editor {
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+.code-textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    resize: none;
+    background: #f8f9fa;
+}
+
+.code-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+}
+
+.editor-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem; /* Add space above the buttons */
+}
+
+/* Responsive: stack buttons vertically on small screens */
+@media (max-width: 600px) {
+    .editor-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+}
+
+.output-panel {
+    background: #f8f9fa;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    /* Remove max-height and set min-height for flexibility */
+    min-height: 100px;
+    max-height: none; /* Allow panel to grow as needed */
+    overflow-y: visible; /* Show all output */
+    transition: all 0.3s ease;
+}
+
+.output-content {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+.problem-examples {
+    margin: 1.5rem 0;
+}
+
+.example {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.example h4 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.example-io {
+    font-family: 'Courier New', monospace;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+.problem-constraints {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.problem-constraints h4 {
+    margin-bottom: 0.5rem;
+    color: #856404;
+}
+
+.problem-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e1e5e9;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e1e5e9;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        min-width: 100%;
+    }
+    
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .problem-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .editor-actions {
+        flex-direction: column;
+    }
+    
+    .problem-actions {
+        flex-direction: column;
+    }
+}
+/* Modal close button styling - ADD THIS */
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #333;
+    background: #f0f0f0;
+}
+
+.modal-close:active {
+    background: #e0e0e0;
+}
+
+/* Ensure modal is above everything */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Higher z-index */
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative; /* For proper close button positioning */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e1e5e9;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+/* Modal Styles - IMPROVED VERSION */
+.modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 10000 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+/* CRITICAL FIX - Force hidden to work */
+.modal.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.modal-content {
+    background: white !important;
+    border-radius: 16px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+    animation: modalSlideIn 0.3s ease !important;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: scale(0.8) translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 1.5rem !important;
+    border-bottom: 1px solid #e1e5e9 !important;
+    background: #f8f9fa !important;
+    border-radius: 16px 16px 0 0 !important;
+}
+
+.modal-body {
+    padding: 1.5rem !important;
+}
+
+/* Close button - IMPROVED */
+.modal-close {
+    background: none !important;
+    border: none !important;
+    font-size: 2rem !important;
+    cursor: pointer !important;
+    color: #666 !important;
+    padding: 0 !important;
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    z-index: 10001 !important;
+}
+
+.modal-close:hover {
+    color: #333 !important;
+    background: #f0f0f0 !important;
+    transform: scale(1.1) !important;
+}
+
+.modal-close:active {
+    background: #e0e0e0 !important;
+    transform: scale(0.95) !important;
+}
+
+/* Ensure form elements in modal work properly */
+.modal textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.modal textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.modal button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.modal button:hover {
+    background: #5a6fd8;
+    transform: translateY(-1px);
+}
+
+/* Output Panel Styles - FIXED VERSION */
+.output-panel {
+    background: #f8f9fa;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    /* Remove max-height and set min-height for flexibility */
+    min-height: 100px;
+    max-height: none; /* Allow panel to grow as needed */
+    overflow-y: visible; /* Show all output */
+    transition: all 0.3s ease;
+}
+
+/* Ensure hidden class works properly */
+.output-panel.hidden {
+    display: none !important;
+}
+
+.output-panel:not(.hidden) {
+    display: block !important;
+}
+
+.output-content {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+/* Test result styling */
+.test-result {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.test-passed {
+    background: #d4edda;
+    border-left-color: #28a745;
+    color: #155724;
+}
+
+.test-failed {
+    background: #f8d7da;
+    border-left-color: #dc3545;
+    color: #721c24;
+}
+
+.test-error {
+    background: #fff3cd;
+    border-left-color: #ffc107;
+    color: #856404;
+}
+#outputModal.modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0,0,0,0.5) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 20000 !important;
+}
+#outputModal.hidden {
+    display: none !important;
+}
+#outputModal .modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+#outputModal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e1e5e9;
+    background: #f8f9fa;
+    border-radius: 16px 16px 0 0;
+}
+#outputModal .modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10001;
+}
+#outputModal .modal-close:hover {
+    color: #333;
+    background: #f0f0f0;
+    transform: scale(1.1);
+}
+#outputModal .modal-body {
+    padding: 1.5rem;
+    font-family: monospace;
+    font-size: 15px;
+    color: #222;
+    background: #f8f9fa;
+    border-radius: 0 0 16px 16px;
+}

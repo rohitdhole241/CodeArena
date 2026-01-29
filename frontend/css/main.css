@@ -1,0 +1,13 @@
+/* ...existing code... */
+#output {
+    display: block !important;
+    background: #f8f9fa;
+    color: #222;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    min-height: 2rem;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+/* ...existing code... */

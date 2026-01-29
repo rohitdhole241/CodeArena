@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem - CodeArena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/problems.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">CodeArena</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="problems.html">Problems</a></li>
+                    <li><a href="submissions.html">Submissions</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; min-height: 80vh;">
+            <!-- Problem Description -->
+            <div class="card problem-panel">
+                <div class="problem-header">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h1 id="problemTitle">Loading...</h1>
+                        <span id="problemDifficulty" class="difficulty-badge">Easy</span>
+                    </div>
+                    <div class="problem-meta">
+                        <span id="problemCategory">Array</span>
+                        <span>•</span>
+                        <span id="problemSolved">0 solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-content">
+                    <div class="problem-description" id="problemDescription">
+                        <p>Loading problem description...</p>
+                    </div>
+
+                    <div class="problem-examples" id="problemExamples">
+                        <!-- Examples will be loaded here -->
+                    </div>
+
+                    <div class="problem-constraints" id="problemConstraints">
+                        <!-- Constraints will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="problem-actions">
+                    <button id="hintBtn" class="btn btn-secondary">💡 Get Hint</button>
+                    <button id="notesBtn" class="btn btn-secondary">📝 Notes</button>
+                </div>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="card editor-panel">
+                <div class="editor-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Code Editor</h3>
+                        <select id="languageSelect" class="filter-select">
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="code-editor">
+                    <textarea id="codeEditor" class="code-textarea" placeholder="Write your solution here..."></textarea>
+                </div>
+
+                <div class="editor-actions">
+                    <button id="runCodeBtn" class="btn btn-secondary">▶️ Run</button>
+                    <button id="submitCodeBtn" class="btn btn-success">✅ Submit</button>
+                    <button id="resetCodeBtn" class="btn btn-danger">🔄 Reset</button>
+                </div>
+
+                <div id="outputPanel" class="output-panel hidden">
+                    <h4>Output:</h4>
+                    <div id="outputContent" class="output-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hint Modal -->
+        <div id="hintModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>💡 Hint</h3>
+                    <button id="closeHintModal" class="modal-close">&times;</button>
+                </div>
+                <div id="hintContent" class="modal-body">
+                    <p>Loading hint...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Modal -->
+        <div id="notesModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📝 My Notes</h3>
+                    <button id="closeNotesModal" class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="notesTextarea" class="form-input" rows="10" placeholder="Write your notes here..."></textarea>
+                    <button id="saveNotesBtn" class="btn btn-primary mt-2">Save Notes</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/problem-detail.js"></script>
+</body>
+</html>

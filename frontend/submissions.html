@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Submissions - CodeArena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .submissions-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            min-width: 120px;
+            background: white;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .submissions-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #5a6fd8;
+        }
+
+        .submissions-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .submissions-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+            display: inline-block;
+        }
+
+        .status-accepted {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-wrong-answer {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-runtime-error {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-time-limit {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .language-badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .view-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .view-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .stats-summary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .stat-item p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">CodeArena</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="problems.html">Problems</a></li>
+                    <li><a href="submissions.html" class="active">Submissions</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem 20px;">
+        <!-- Page Header -->
+        <div style="text-align: center; margin-bottom: 3rem; color: white;">
+            <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">My Submissions</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Track your coding progress and submissions</p>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="stats-summary">
+            <div class="stat-item">
+                <h3 id="totalSubmissions">0</h3>
+                <p>Total Submissions</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="acceptedSubmissions">0</h3>
+                <p>Accepted</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="acceptanceRate">0%</h3>
+                <p>Acceptance Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="problemsSolved">0</h3>
+                <p>Problems Solved</p>
+            </div>
+        </div>
+
+        <!-- Submissions Container -->
+        <div class="submissions-container">
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="search-input" 
+                        placeholder="🔍 Search by problem name..."
+                    >
+                    
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Wrong Answer">Wrong Answer</option>
+                        <option value="Runtime Error">Runtime Error</option>
+                        <option value="Time Limit Exceeded">Time Limit</option>
+                    </select>
+
+                    <select id="languageFilter" class="filter-select">
+                        <option value="">All Languages</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                    </select>
+
+                    <button id="clearFilters" class="btn btn-secondary">
+                        Clear Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submissions Table -->
+            <div style="overflow-x: auto;">
+                <table class="submissions-table">
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Language</th>
+                            <th>Runtime</th>
+                            <th>Memory</th>
+                            <th>Submitted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsTableBody">
+                        <!-- Submissions will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <h3>📝 No submissions yet</h3>
+                <p>Start solving problems to see your submissions here!</p>
+                <button onclick="window.location.href='problems.html'" class="btn btn-primary" style="margin-top: 1rem;">
+                    Browse Problems
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Submission Detail Modal -->
+    <div id="submissionModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 800px; width: 90%;">
+            <div class="modal-header">
+                <h3 id="modalTitle">Submission Details</h3>
+                <button id="closeModal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="submissionDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/submissions.js"></script>
+</body>
+</html>

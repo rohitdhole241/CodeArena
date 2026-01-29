@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrations - CodeArena Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="../dashboard.html" class="logo">CodeArena Admin</a>
+                <ul class="nav-links">
+                    <li><a href="../dashboard.html">Dashboard</a></li>
+                    <li><a href="registrations.html">Registrations</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem 20px;">
+        <h2>Recent Registrations</h2>
+        <div class="card" style="margin-top: 1rem;">
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="registrationsTable">
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // Fetch and display registrations
+        async function loadRegistrations() {
+            try {
+                const response = await fetch('/api/admin/registrations');
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('registrationsTable');
+                tableBody.innerHTML = data.map(reg => `
+                    <tr>
+                        <td>${reg.full_name}</td>
+                        <td>${reg.username}</td>
+                        <td>${reg.email}</td>
+                        <td>${new Date(reg.created_at).toLocaleString()}</td>
+                        <td><span class="badge ${reg.status}">${reg.status}</span></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading registrations:', error);
+            }
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadRegistrations);
+    </script>
+</body>
+</html>

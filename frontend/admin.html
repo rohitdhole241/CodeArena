@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CodeArena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">CodeArena Admin</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="admin.html" class="active">Admin</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem 20px;">
+        <div class="text-center mb-3">
+            <h1 style="color: white; margin-bottom: 1rem;">Admin Panel</h1>
+            <p style="color: rgba(255,255,255,0.8);">Manage problems, users, and platform settings</p>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="problems">Problems</button>
+            <button class="tab-btn" data-tab="users">Users</button>
+            <button class="tab-btn" data-tab="statistics">Statistics</button>
+        </div>
+
+        <!-- Problems Tab -->
+        <div id="problems-tab" class="tab-content active">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3>Manage Problems</h3>
+                    <button id="addProblemBtn" class="btn btn-primary">+ Add New Problem</button>
+                </div>
+
+                <div class="admin-table">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 1rem; text-align: left;">Title</th>
+                                <th style="padding: 1rem; text-align: left;">Difficulty</th>
+                                <th style="padding: 1rem; text-align: left;">Category</th>
+                                <th style="padding: 1rem; text-align: left;">Solved</th>
+                                <th style="padding: 1rem; text-align: left;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="problemsTableBody">
+                            <!-- Problems will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users-tab" class="tab-content">
+            <div class="card">
+                <h3 style="margin-bottom: 2rem;">Manage Users</h3>
+                
+                <div class="admin-table">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 1rem; text-align: left;">Username</th>
+                                <th style="padding: 1rem; text-align: left;">Email</th>
+                                <th style="padding: 1rem; text-align: left;">Role</th>
+                                <th style="padding: 1rem; text-align: left;">Problems Solved</th>
+                                <th style="padding: 1rem; text-align: left;">Joined</th>
+                                <th style="padding: 1rem; text-align: left;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="statistics-tab" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <h3 id="totalProblems">0</h3>
+                        <p>Total Problems</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3 id="totalSubmissions">0</h3>
+                        <p>Total Submissions</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <h3 id="successRate">0%</h3>
+                        <p>Success Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add/Edit Problem Modal -->
+        <div id="problemModal" class="modal hidden">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h3 id="problemModalTitle">Add New Problem</h3>
+                    <button id="closeProblemModal" class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="problemForm">
+                        <div class="form-group">
+                            <label for="problemTitle" class="form-label">Title</label>
+                            <input type="text" id="problemTitle" name="title" class="form-input" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label for="problemDifficulty" class="form-label">Difficulty</label>
+                                <select id="problemDifficulty" name="difficulty" class="form-input" required>
+                                    <option value="Easy">Easy</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Hard">Hard</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="problemCategory" class="form-label">Category</label>
+                                <select id="problemCategory" name="category" class="form-input" required>
+                                    <option value="Array">Array</option>
+                                    <option value="String">String</option>
+                                    <option value="Linked List">Linked List</option>
+                                    <option value="Tree">Tree</option>
+                                    <option value="Graph">Graph</option>
+                                    <option value="Dynamic Programming">Dynamic Programming</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="problemDescription" class="form-label">Description</label>
+                            <textarea id="problemDescription" name="description" class="form-input" rows="6" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="problemExamples" class="form-label">Examples (JSON format)</label>
+                            <textarea id="problemExamples" name="examples" class="form-input" rows="4" placeholder='[{"input": "nums = [2,7,11,15], target = 9", "output": "[0,1]"}]'></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="problemConstraints" class="form-label">Constraints</label>
+                            <textarea id="problemConstraints" name="constraints" class="form-input" rows="3"></textarea>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button type="button" id="cancelProblem" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Problem</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
