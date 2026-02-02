@@ -10,7 +10,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install || true'
+                bat 'npm install'
             }
         }
 
@@ -22,12 +22,12 @@ pipeline {
 
         stage('Deploy to Nginx') {
             steps {
-                sh '''
-                sudo rm -rf /var/www/html/*
-                sudo cp -r ./* /var/www/html/
+                bat '''
+                rmdir /s /q C:\\nginx\\html
+                mkdir C:\\nginx\\html
+                xcopy /E /I /Y . C:\\nginx\\html
                 '''
             }
         }
     }
 }
-
