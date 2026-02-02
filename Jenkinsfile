@@ -20,12 +20,12 @@ pipeline {
             }
         }
 
-        stage('Deploy to Nginx') {
+        stage('Deploy Frontend to Nginx') {
             steps {
                 bat '''
-                rmdir /s /q C:\\nginx\\html
+                if exist C:\\nginx\\html rmdir /s /q C:\\nginx\\html
                 mkdir C:\\nginx\\html
-                xcopy /E /I /Y . C:\\nginx\\html
+                xcopy /E /I /Y frontend C:\\nginx\\html
                 '''
             }
         }
