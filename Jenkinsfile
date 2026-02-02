@@ -23,9 +23,9 @@ pipeline {
         stage('Deploy Frontend to Nginx') {
             steps {
                 bat '''
-                if exist C:\\nginx\\html rmdir /s /q C:\\nginx\\html
-                mkdir C:\\nginx\\html
-                xcopy /E /I /Y frontend C:\\nginx\\html
+                if exist "C:\\Users\\rohit\\Downloads\\nginx-1.28.1\\nginx-1.28.1\\html" rmdir /s /q "C:\\Users\\rohit\\Downloads\\nginx-1.28.1\\nginx-1.28.1\\html"
+                mkdir "C:\\Users\\rohit\\Downloads\\nginx-1.28.1\\nginx-1.28.1\\html"
+                xcopy /E /I /Y frontend "C:\\Users\\rohit\\Downloads\\nginx-1.28.1\\nginx-1.28.1\\html"
                 '''
             }
         }
