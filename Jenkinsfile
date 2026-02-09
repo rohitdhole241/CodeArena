@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'codearena-agent'
+    }
 
     stages {
         stage('Checkout') {
